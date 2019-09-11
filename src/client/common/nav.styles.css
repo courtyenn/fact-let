@@ -1,0 +1,42 @@
+nav {
+  height: 90px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  color: var(--white);
+  flex: 1 0 25%;
+}
+
+.menu {
+  list-style-type: none;
+  text-align: right;
+  flex: 1 0 50%;
+}
+
+.menu li {
+  display: inline-block;
+  margin: 0px 15px;
+}
+
+.menu li a {
+  text-decoration: none;
+  font-size: 13px;
+}
+.mobile-navigation{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary);
+  z-index: 100;
+}
+
+.mobile-navigation > ul li {
+  display: block;
+  margin: 10px;
+  text-align: center;
+  font-size: 25px;
+}
