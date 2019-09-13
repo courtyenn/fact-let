@@ -8,6 +8,7 @@ import '../lib/fontello/css/facts.css'
 import Nav from './common/Nav'
 import Home from './common/Home'
 import CreateGame from './create/CreateGame'
+import Archive from './archive/index'
 
 class GetTheFactsStraight extends React.Component {
 
@@ -19,6 +20,7 @@ class GetTheFactsStraight extends React.Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/create" component={CreateGame} />
+            <Route exact path="/quizzes" component={Archive} />
           </Switch>
         </>
       </Router>

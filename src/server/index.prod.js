@@ -1,13 +1,8 @@
 require('dotenv').config()
-const webpack = require('webpack')
-const WebpackDevServer = require('webpack-dev-server')
-let config = require('../../webpack.dev.js')
 
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const proxy = require('proxy-middleware')
-const url = require('url')
 
 const Game = require('./Game')
 
@@ -15,8 +10,6 @@ mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology
 
 const app = express()
 app.use(bodyParser.json())
-
-app.use('/assets', proxy(url.parse(`http://${process.env.BASE_URL}:${process.env.PROXY_PORT}/assets`)))
 
 app.get('/fonts/:file', function(req, res) {
   res.sendFile(`${__dirname}/fonts/${req.params.file}`)
@@ -32,19 +25,12 @@ app.post('/api/game', async (req, res) => {
   res.json(test)
 })
 
+app.get('/assets/app.bundle.js', (req, res) => {
+  res.sendFile(`${__dirname}/assets/app.bundle.js`)
+})
+
 app.get('/*', function(req, res) {
     res.sendFile(__dirname + '/static/index.html')
 });
 
-var server = new WebpackDevServer(webpack(config), {
-    contentBase: '/static',
-    hot: true,
-    quiet: false,
-    noInfo: false,
-    publicPath: "/assets/",
-
-    stats: { colors: true }
-});
-
-server.listen(process.env.PROXY_PORT, process.env.BASE_URL, function() {});
 app.listen(process.env.APP_PORT);

@@ -1,18 +1,21 @@
 import React, { useState, useReducer } from 'react'
+import { fromFetch } from 'rxjs/fetch'
 
-import { defaultCategory } from './create.helpers'
+import { defaultCategory, fakeGameData } from './create.helpers'
 import gameReducer from './game.reducer'
 import { Category, Answer } from '../../fact.types'
 import CategoryList from './CategoryList'
 
+const myHeaders = new Headers({'Content-Type': 'application/json'})
+
 export default function CreateGame(){
-  const initialCategory = defaultCategory()
-  const defaultGame = {
-    id: '_id',
-    title: '',
-    categories: [initialCategory]
-  }
-  const [game, dispatch] = useReducer(gameReducer, defaultGame)
+  // const initialCategory = defaultCategory()
+  // const defaultGame = {
+  //   id: '_id',
+  //   title: '',
+  //   categories: [initialCategory]
+  // }
+  const [game, dispatch] = useReducer(gameReducer, fakeGameData())
 
   const setGameTitle = (title: string) => {
     dispatch({
@@ -21,6 +24,26 @@ export default function CreateGame(){
         title,
       }
     })
+  }
+
+  const onComplete = (resp: any) => {
+    console.log('done', resp)
+  }
+
+  const submitGame = () => {
+    delete game.id
+    game.categories.forEach(c => {
+      delete c.id
+      c.answers.forEach((a: Answer) => {
+        delete a.id
+        delete a.categoryId
+      })
+    })
+    fromFetch(`/api/game`, {
+      method: 'POST',
+      body: JSON.stringify(game),
+      headers: myHeaders
+    }).subscribe(onComplete)
   }
 
   return (
@@ -42,7 +65,7 @@ export default function CreateGame(){
           dispatch={dispatch}
         />
       </div>
-      <input className="btn primary" type="button" value="Submit" onClick={}/>
+      <input className="btn primary" type="button" value="Submit" onClick={() => submitGame()} />
     </div>
   </div>
   )
