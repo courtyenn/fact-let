@@ -1,5 +1,5 @@
 require('dotenv').config()
-
+const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
@@ -10,6 +10,9 @@ mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology
 
 const app = express()
 app.use(bodyParser.json())
+
+const DIST = path.join(__dirname, "dist")
+app.use(express.static(DIST))
 
 app.get('/fonts/:file', function(req, res) {
   res.sendFile(`${__dirname}/fonts/${req.params.file}`)

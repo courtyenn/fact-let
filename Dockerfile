@@ -4,12 +4,11 @@ WORKDIR /app
 
 COPY package.json package.json
 
-RUN yarn install --force
-
-RUN npm rebuild node-sass
+RUN yarn install
+RUN yarn install nodemon -g
 
 COPY . .
 
 EXPOSE 3000
 
-CMD [ "npm", "start"]
+CMD [ "npm", "docker"]

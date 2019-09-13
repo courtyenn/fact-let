@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start-dev": "webpack-dev-server --config ./webpack.dev.js",
-    "start": "node src/server/index.js",
-    "build": "webpack --config ./webpack.prod.js && node src/server/index.prod.js"
+    "build": "webpack --config ./webpack.prod.js -p --progress --hot",
+    "start-dev": "node src/server/index.js",
+    "start": "yarn build && node src/server/index.prod.js",
+    "docker": "yarn build && nodemon src/server/index.prod.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
