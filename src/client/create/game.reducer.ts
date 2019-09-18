@@ -9,17 +9,20 @@ export default function gameReducer(state: Game, action: Action): Game{
     switch(action.type){
       case 'CREATE_CATEGORY':
         draft.categories.push(defaultCategory())
-        return
+        break;
       case 'REMOVE_CATEGORY':
         draft.categories = draft.categories.filter(c => c.id !== action.payload)
+        break;
       case 'GAME_TITLE':
         draft.title = action.payload.title
+        break;
       case 'CATEGORY_TITLE':
         draft.categories.forEach(c => {
           if(c.id === action.payload.id){
             c.title = action.payload.title
           }
         })
+        break;
       case 'FACT_TITLE':
         draft.categories.forEach(c => {
           if(c.id === action.payload.categoryId){
@@ -30,21 +33,21 @@ export default function gameReducer(state: Game, action: Action): Game{
             })
           }
         })
-        return
+        break;
       case 'CREATE_FACT':
         draft.categories.forEach(c => {
           if(c.id === action.payload.categoryId){
             c.answers.push(defaultAnswer(c.id))
           }
         })
-        return
+        break;
       case 'REMOVE_FACT':
         draft.categories.forEach(c => {
           if(c.id === action.payload.categoryId){
             c.answers = c.answers.filter((a: Answer) => a.id !== action.payload.id)
           }
         })
-        return
+        break;
     }
   })
 }

@@ -6,7 +6,7 @@ services:
     ports:
       - "27017:27017"
   app:
-    container_name: express-mongo
+    container_name: fact-let
     restart: always
     build: ./
     ports:

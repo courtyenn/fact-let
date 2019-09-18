@@ -28,7 +28,16 @@ app.get('/api/games', async (req, res) => {
 })
 
 app.post('/api/game', async (req, res) => {
-  const test = await Game.create(req.body)
+  const game = req.body
+  game.id = undefined
+  game.categories.forEach(c => {
+    c.id = undefined
+    c.answers.forEach(a => {
+      a.id = undefined
+      a.categoryId = undefined
+    })
+  })
+  const test = await Game.create(game)
   res.json(test)
 })
 

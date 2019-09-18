@@ -31,6 +31,7 @@ export default function Category(props: Props){
         onChange={e => setCategoryTitle(category.id, e.target.value)}
         value={category.title}
         placeholder={'Enter category name'}
+        data-testid="cat-title"
       />
     </div>
     <FactList

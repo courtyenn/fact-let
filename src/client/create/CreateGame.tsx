@@ -3,19 +3,19 @@ import { fromFetch } from 'rxjs/fetch'
 
 import { defaultCategory, fakeGameData } from './create.helpers'
 import gameReducer from './game.reducer'
-import { Category, Answer } from '../../fact.types'
+import { Answer } from '../../fact.types'
 import CategoryList from './CategoryList'
 
 const myHeaders = new Headers({'Content-Type': 'application/json'})
 
 export default function CreateGame(){
-  // const initialCategory = defaultCategory()
-  // const defaultGame = {
-  //   id: '_id',
-  //   title: '',
-  //   categories: [initialCategory]
-  // }
-  const [game, dispatch] = useReducer(gameReducer, fakeGameData())
+  const initialCategory = defaultCategory()
+  const defaultGame = {
+    id: '',
+    title: '',
+    categories: [initialCategory]
+  }
+  const [game, dispatch] = useReducer(gameReducer, defaultGame)
 
   const setGameTitle = (title: string) => {
     dispatch({
@@ -31,14 +31,6 @@ export default function CreateGame(){
   }
 
   const submitGame = () => {
-    delete game.id
-    game.categories.forEach(c => {
-      delete c.id
-      c.answers.forEach((a: Answer) => {
-        delete a.id
-        delete a.categoryId
-      })
-    })
     fromFetch(`/api/game`, {
       method: 'POST',
       body: JSON.stringify(game),
@@ -50,6 +42,7 @@ export default function CreateGame(){
   <div className="quiz wrapper create">
     <input
       id="title"
+      data-testid="title"
       type="text"
       name="title"
       placeholder="Title of quiz..."
@@ -65,7 +58,7 @@ export default function CreateGame(){
           dispatch={dispatch}
         />
       </div>
-      <input className="btn primary" type="button" value="Submit" onClick={() => submitGame()} />
+      <input className="btn primary" type="button" value="Submit" onClick={() => submitGame()} data-testid="submit-game"/>
     </div>
   </div>
   )

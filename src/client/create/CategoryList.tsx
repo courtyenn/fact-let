@@ -46,6 +46,6 @@ export default function CategoryList(props: Props){
     <ul>
       {createList()}
     </ul>
-    <button className="btn secondary" type="button" onClick={e => addCategory()}>Add category</button>
+    <button className="btn secondary" type="button" onClick={e => addCategory()} data-testid="add-cat">Add category</button>
   </>
 }
