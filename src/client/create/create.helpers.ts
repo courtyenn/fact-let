@@ -21,7 +21,7 @@ export const defaultCategory = function (): Category {
 export const fakeGameData = function(): Game {
   const game = {
     id: 'a',
-    title: 'City of Sandy City Council Candidates',
+    title: 'Sandy City Council Candidates',
     categories: [
       {
         id: 'b',

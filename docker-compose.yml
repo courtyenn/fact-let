@@ -5,14 +5,18 @@ services:
     image: mongo
     ports:
       - "27017:27017"
+    volumes:
+      - "/Users/courtyen/MongoDbs:/data/db"
   app:
     container_name: fact-let
     restart: always
     build: ./
     ports:
-      - "80:3000"
+      - "80:3031"
     volumes:
       - .:/app
       - /app/node_modules
     links:
+      - mongo
+    depends_on:
       - mongo
